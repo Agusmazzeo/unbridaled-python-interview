@@ -6,7 +6,7 @@ We want like you to create a single endpoint following the following spec using 
 * migration
 * handler
 
-### Create an endpoint 
+### Create an endpoint
 
 Create an endpoint with route: `POST /v1/products/create` that takes in the following request payload.
 
@@ -46,9 +46,9 @@ Create an endpoint with route: `POST /v1/products/create` that takes in the foll
 }
 ```
 
-Here are the explanations on each of the tables. A `Product` has many `ProductVariants`. You will be free to determine the best DB type for each column. Make sure you do foreign key and make any design considerations like you would designing a production ERP/ecommerce system. 
+Here are the explanations on each of the tables. A `Product` has many `ProductVariants`. You will be free to determine the best DB type for each column. Make sure you do foreign key and make any design considerations like you would designing a production ERP/ecommerce system.
 
-The endpoint should create the product and variants ALL in a single transaction and rollback if necessary. You will be expected to write validations in the request body parsing layer (using marshmallow or pydantic). 
+The endpoint should create the product and variants ALL in a single transaction and rollback if necessary. You will be expected to write validations in the request body parsing layer (using marshmallow or pydantic).
 
 ### Product Object 
 
@@ -90,7 +90,7 @@ The endpoint should create the product and variants ALL in a single transaction 
     ]
 }
 ```
-   
+
 |    Attribute    |    Description    |
 |    ---    |    ---    |
 |    id    |    Unique identifier for the object.    |
@@ -99,13 +99,63 @@ The endpoint should create the product and variants ALL in a single transaction 
 |    purchase_price    |  Purchase price of the variant |
 |    config_attributes | Array of dictionaries |
 
-### Testing 
+### Testing
 
 Write a simple test that tests your endpoint functionality using your favourite python testsuite (pytest, unittest, etc.).
 
 ### Deployment (Bonus)
 
-If time permits, deploy the FastAPI API on Heroku (use free dyno). 
+If time permits, deploy the FastAPI API on Heroku (use free dyno).
 
+# Dependencias Core
+- Docker
+- Docker-Compose
+- Python 3.11
+- PostgreSQL
 
+# Development environment setup
+1. Install [Docker][https://docs.docker.com/engine/install/].
+2. Install [Pyenv][https://github.com/pyenv/pyenv?tab=readme-ov-file#installation].
+3. Install Python version 3.11 using pyenv:
+    ```bash
+    pyenv install 3.11
+    if command -v pyenv 1>/dev/null 2>&1; then
+    eval "$(pyenv init -)"
+    eval "$(pyenv virtualenv-init -)"
+    fi
+    ```
+4. Create Python env:
+    ```bash
+    pyenv virtualenv 3.11.1 unbridaled-api
+    pyenv activate unbridaled-api
+    pyenv local unbridaled-api
+    ```
+5. Install Python dependencies:
+    ```bash
+    python -m pip install "pip-tools==7.2.0"
+    python -m piptools compile requirements.in
+    python -m pip install -r requirements.txt
+    python -m pip install -e .
+    ```
+6. Install pre-commit and run:
+    ```bash
+    pre-commit install
+    pre-commit run --all-files
+    ```
+7. Setup tests and dependencies:
+    ```bash
+    python -m piptools compile requirements-test.in
+    python -m pip install -r requirements-test.txt
+    ```
 
+# Migrations
+1. Run migrations init to update version files:
+```bash
+python -m alembic init migrations
+python -m alembic revision --autogenerate -m "init"
+```
+
+2. Apply migrations script to the database:
+```bash
+python -m alembic upgrade head
+```

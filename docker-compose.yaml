@@ -1,0 +1,15 @@
+version: '3.3'
+
+services:
+  db:
+    image: postgres
+    restart: always
+    container_name: postgres
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: pass
+      POSTGRES_DB: unbridaled
+    volumes:
+      - ./data:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
