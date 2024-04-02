@@ -107,13 +107,17 @@ Write a simple test that tests your endpoint functionality using your favourite 
 
 If time permits, deploy the FastAPI API on Heroku (use free dyno).
 
-# Dependencias Core
+---
+
+# Service Development
+
+## Core Dependencies
 - Docker
 - Docker-Compose
 - Python 3.11
 - PostgreSQL
 
-# Development environment setup
+## Development environment setup
 1. Install [Docker][https://docs.docker.com/engine/install/].
 2. Install [Pyenv][https://github.com/pyenv/pyenv?tab=readme-ov-file#installation].
 3. Install Python version 3.11 using pyenv:
@@ -148,7 +152,7 @@ If time permits, deploy the FastAPI API on Heroku (use free dyno).
     python -m pip install -r requirements-test.txt
     ```
 
-# Migrations
+## Migrations
 1. Run migrations init to update version files:
 ```bash
 python -m alembic init migrations

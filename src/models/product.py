@@ -11,7 +11,7 @@ class ConfigAttribute(BaseModel):
 
 
 class ProductVariant(BaseModel):
-    id: int
+    id: int | None = None
     sku: str
     sales_price: int
     product_id: int
@@ -19,7 +19,7 @@ class ProductVariant(BaseModel):
     type: str
     created_at: str
     updated_at: str
-    config_attributes: list[ConfigAttribute]
+    config_attributes: list[ConfigAttribute] | None = Field(default_factory=list)
 
 
 class Product(BaseModel):
@@ -33,7 +33,7 @@ class Product(BaseModel):
     purchase_uom: str
     purchase_uom_conversion_rate: int
     batch_tracked: bool
-    variants: list[ProductVariant] | None = None
+    variants: list[ProductVariant] | None = Field(default_factory=list)
     additional_info: str
     created_at: str
     updated_at: str
@@ -96,20 +96,3 @@ class ProductTableBase(SQLModel, table=True):
     additional_info: str
     created_at: datetime
     updated_at: datetime
-
-
-# class ProductVariantTable(ProductVariantTableBase, table=True):
-#     __tablename__ = "product_variant"
-#     config_attributes: list[ConfigAttributeTable] = Relationship(back_populates="variants", link_model=ProductVariant2ConfigAttributeTable)
-#     product: "ProductTable" = Relationship(back_populates="variants", link_model=Product2VariantsTable)
-
-#     class Config:
-#         arbitrary_types_allowed = True
-
-
-# class ProductTable(SQLModel, table=True):
-#     __tablename__ = "product"
-#     variants: list[ProductVariantTable] = Relationship(back_populates="product", link_model=Product2VariantsTable)
-
-#     class Config:
-#         arbitrary_types_allowed = True

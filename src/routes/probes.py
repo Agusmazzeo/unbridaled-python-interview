@@ -1,6 +1,6 @@
 from fastapi.routing import APIRouter
 
-from src.models.responses import AliveResponse
+from src.models.schemas import AliveResponse
 
 router = APIRouter()
 

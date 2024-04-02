@@ -1,5 +1,7 @@
 from pydantic import BaseModel
 
+from src.models.product import Product
+
 
 def to_lower_camel(string: str):
     return string.partition("_")[0] + "".join(
@@ -15,3 +17,11 @@ class LowerCamelAlias(BaseModel):
 
 class AliveResponse(LowerCamelAlias):
     alive: bool
+
+
+class ProductCreateSchema(LowerCamelAlias, Product):
+    pass
+
+
+class ProductResponseSchema(LowerCamelAlias, Product):
+    pass
