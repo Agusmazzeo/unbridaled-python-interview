@@ -14,24 +14,46 @@ class ProductHandler:
         product_dict: dict[int, Product] = {}
         result = self.db_client.get_all_products_with_variations()
         for product, variant in result:
-            if not product_dict.get(product.id):
-                product_dict[product.id] = Product.model_validate(product.model_dump())
+            if product.id is not None:
+                if not product_dict.get(product.id):
+                    product_dict[product.id] = Product.model_validate(
+                        product.model_dump()
+                    )
+                if (
+                    variant is not None
+                    and product_dict[product.id].variants is not None
+                ):
+                    product_dict[product.id].variants.append(
+                        ProductVariant.model_validate(variant.model_dump())
+                    )
+        return product_dict.values()
+
+    def get_product_by_id(self, product_id: int) -> Product | None:
+        product: Product | None = None
+        result = self.db_client.get_product_by_id(product_id)
+        for p, variant in result:
+            if product is None:
+                product = Product.model_validate(p.model_dump())
             if variant is not None:
-                product_dict[product.id].variants.append(
+                product.variants.append(
                     ProductVariant.model_validate(variant.model_dump())
                 )
-        return product_dict.values()
+        return product
 
     def create_product(self, product: Product) -> Product:
         created_product = self.db_client.create_product(
-            product=ProductTableBase.model_validate(product.model_dump())
+            product=ProductTableBase.model_validate(
+                product.model_dump(exclude_none=True)
+            )
         )
         product.id = created_product.id
 
         for variant in product.variants:
             created_variant = self.db_client.create_product_variant(
                 created_product.id,
-                ProductVariantTableBase.model_validate(variant.model_dump()),
+                ProductVariantTableBase.model_validate(
+                    variant.model_dump(exclude_none=True)
+                ),
             )
             variant.id = created_variant.id
             for config_attribute in variant.config_attributes:

@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime as dt
 from datetime import UTC
 
 from pydantic import BaseModel
@@ -18,8 +18,8 @@ class ProductVariant(BaseModel):
     product_id: int
     purchase_price: int
     type: str
-    created_at: datetime = Field(default=datetime.now(UTC))
-    updated_at: datetime = Field(default=datetime.now(UTC))
+    created_at: dt | None = Field(default=dt.now(UTC))
+    updated_at: dt | None = Field(default=dt.now(UTC))
     config_attributes: list[ConfigAttribute] | None = Field(default_factory=list)
 
 
@@ -36,8 +36,8 @@ class Product(BaseModel):
     batch_tracked: bool
     variants: list[ProductVariant] | None = Field(default_factory=list)
     additional_info: str
-    created_at: datetime = Field(default=datetime.now(UTC))
-    updated_at: datetime = Field(default=datetime.now(UTC))
+    created_at: dt | None = Field(default=dt.now(UTC))
+    updated_at: dt | None = Field(default=dt.now(UTC))
 
 
 # ============= Database Models ============= #
@@ -78,8 +78,8 @@ class ProductVariantTableBase(SQLModel, table=True):
     product_id: int
     purchase_price: int
     type: str
-    created_at: datetime
-    updated_at: datetime
+    created_at: dt = dt.now(UTC)
+    updated_at: dt = dt.now(UTC)
 
 
 class ProductTableBase(SQLModel, table=True):
@@ -95,5 +95,5 @@ class ProductTableBase(SQLModel, table=True):
     purchase_uom_conversion_rate: int
     batch_tracked: bool
     additional_info: str
-    created_at: datetime
-    updated_at: datetime
+    created_at: dt | None = dt.now(UTC)
+    updated_at: dt | None = dt.now(UTC)

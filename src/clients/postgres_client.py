@@ -94,6 +94,30 @@ class PostgresClient:
         except Exception as ex:
             raise QueryFailure(f"Failed to execute query: {ex}")
 
+    def get_product_by_id(
+        self, product_id: int
+    ) -> list[tuple[ProductTableBase, ProductVariantTableBase]]:
+        try:
+            statement = (
+                select(ProductTableBase, ProductVariantTableBase)
+                .join_from(
+                    ProductTableBase,
+                    Product2VariantsTable,
+                    ProductTableBase.id == Product2VariantsTable.product_id,
+                    isouter=True,
+                )
+                .join_from(
+                    Product2VariantsTable,
+                    ProductVariantTableBase,
+                    ProductVariantTableBase.id == Product2VariantsTable.variant_id,
+                    isouter=True,
+                )
+                .where(ProductTableBase.id == product_id)
+            )
+            return self.session.exec(statement)
+        except Exception as ex:
+            raise QueryFailure(f"Failed to execute query: {ex}")
+
     def get_all_products_with_variations(
         self,
     ) -> list[tuple[ProductTableBase, ProductVariantTableBase]]:

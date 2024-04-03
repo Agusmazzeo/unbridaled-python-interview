@@ -1,6 +1,8 @@
 from pydantic import BaseModel
+from pydantic import Field
 
 from src.models.product import Product
+from src.models.product import ProductVariant
 
 
 def to_lower_camel(string: str):
@@ -19,8 +21,15 @@ class AliveResponse(LowerCamelAlias):
     alive: bool
 
 
+class VariantCreateSchema(LowerCamelAlias, ProductVariant):
+    created_at: None = Field(None)
+    updated_at: None = Field(None)
+
+
 class ProductCreateSchema(LowerCamelAlias, Product):
-    pass
+    variants: list[VariantCreateSchema] | None = Field(default_factory=list)
+    created_at: None = Field(None)
+    updated_at: None = Field(None)
 
 
 class ProductResponseSchema(LowerCamelAlias, Product):

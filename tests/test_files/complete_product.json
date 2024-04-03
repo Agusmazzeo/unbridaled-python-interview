@@ -15,8 +15,6 @@
             "product_id": 1,
             "purchase_price": 0,
             "type": "product",
-            "created_at": "2020-10-23T10:37:05.085Z",
-            "updated_at": "2020-10-23T10:37:05.085Z",
             "config_attributes": [
                 {
                     "config_name": "Type",
@@ -25,7 +23,5 @@
             ]
         }
     ],
-    "additional_info": "additional info",
-    "created_at": "2020-10-23T10:37:05.085Z",
-    "updated_at": "2020-10-23T10:37:05.085Z"
+    "additional_info": "additional info"
 }
