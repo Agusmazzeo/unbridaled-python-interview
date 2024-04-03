@@ -18,8 +18,8 @@ class ProductVariant(BaseModel):
     product_id: int
     purchase_price: int
     type: str
-    created_at: datetime = Field(default_factory=datetime.now(UTC))
-    updated_at: datetime = Field(default_factory=datetime.now(UTC))
+    created_at: datetime = Field(default=datetime.now(UTC))
+    updated_at: datetime = Field(default=datetime.now(UTC))
     config_attributes: list[ConfigAttribute] | None = Field(default_factory=list)
 
 
@@ -36,8 +36,8 @@ class Product(BaseModel):
     batch_tracked: bool
     variants: list[ProductVariant] | None = Field(default_factory=list)
     additional_info: str
-    created_at: datetime = Field(default_factory=datetime.now(UTC))
-    updated_at: datetime = Field(default_factory=datetime.now(UTC))
+    created_at: datetime = Field(default=datetime.now(UTC))
+    updated_at: datetime = Field(default=datetime.now(UTC))
 
 
 # ============= Database Models ============= #
