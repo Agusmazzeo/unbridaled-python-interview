@@ -48,6 +48,24 @@ def upgrade() -> None:
         sa.Column("updated_at", sqlmodel.sql.sqltypes.AutoString(), nullable=False),
         sa.PrimaryKeyConstraint("id"),
     )
+    op.execute(
+        sa.DDL(
+            """
+            ALTER TABLE product
+            ALTER COLUMN created_at TYPE timestamp without time zone
+            USING created_at::timestamp without time zone
+            """
+        )
+    )
+    op.execute(
+        sa.DDL(
+            """
+            ALTER TABLE product
+            ALTER COLUMN updated_at TYPE timestamp without time zone
+            USING updated_at::timestamp without time zone
+            """
+        )
+    )
     op.create_table(
         "product_variant",
         sa.Column("id", sa.Integer(), nullable=False),
@@ -59,6 +77,24 @@ def upgrade() -> None:
         sa.Column("created_at", sqlmodel.sql.sqltypes.AutoString(), nullable=False),
         sa.Column("updated_at", sqlmodel.sql.sqltypes.AutoString(), nullable=False),
         sa.PrimaryKeyConstraint("id"),
+    )
+    op.execute(
+        sa.DDL(
+            """
+            ALTER TABLE product_variant
+            ALTER COLUMN created_at TYPE timestamp without time zone
+            USING created_at::timestamp without time zone
+            """
+        )
+    )
+    op.execute(
+        sa.DDL(
+            """
+            ALTER TABLE product_variant
+            ALTER COLUMN updated_at TYPE timestamp without time zone
+            USING updated_at::timestamp without time zone
+            """
+        )
     )
     op.create_table(
         "product_to_variants",
