@@ -4,8 +4,6 @@
 #
 #    pip-compile requirements-test.in
 #
---index-url https://pypi-ro-nobrowse:ZoGvjFjkJamJr2oHq1Uz@repo.carvana.com/repository/pypi-all/simple
---trusted-host repo.carvana.com=pypi.org
 
 anyio==4.3.0
     # via

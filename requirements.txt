@@ -4,8 +4,6 @@
 #
 #    pip-compile requirements.in
 #
---index-url https://pypi-ro-nobrowse:ZoGvjFjkJamJr2oHq1Uz@repo.carvana.com/repository/pypi-all/simple
---trusted-host repo.carvana.com=pypi.org
 
 alembic==1.13.1
     # via -r requirements.in
