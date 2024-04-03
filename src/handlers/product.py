@@ -18,7 +18,7 @@ class ProductHandler:
                 product_dict[product.id] = Product.model_validate(product.model_dump())
             if variant is not None:
                 product_dict[product.id].variants.append(
-                    ProductVariant.model_validate(variant)
+                    ProductVariant.model_validate(variant.model_dump())
                 )
         return product_dict.values()
 
